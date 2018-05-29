@@ -1,5 +1,5 @@
-let width = 960;
-let height = 600;
+let width = 1200;
+let height = 900;
 let radius = 35;
 
 const svg = d3.select('body')
@@ -16,7 +16,7 @@ function initSimulation() {
     return d3.forceSimulation()
         .force('centering', d3.forceCenter(width / 2, height / 2))
         .force('collision', d3.forceCollide()
-            .radius(radius)
+            .radius(radius * 2)
             .strength(0.7))
         .force('many-body', d3.forceManyBody()
             .strength(-10)  // negative to push away, positive to draw each other
