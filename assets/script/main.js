@@ -34,7 +34,7 @@ function drawNodes(nodes) {
         .append('circle')
         .classed('avatar', true)
         .attr('r', radius)
-        // .attr('fill', d => {})
+        .attr('fill-opacity', 0.5)
 }
 
 async function start() {
@@ -44,12 +44,17 @@ async function start() {
 
     let nodes = drawNodes(data.nodes);
 
+    nodes.append('image')
+        .attr('href', v => `assets/image/${v.image}`)
+        .attr('width', radius)
+        .attr('height', radius)
+
     simulation
         .nodes(data.nodes)
         .on('tick', () => {
             nodes
-                .attr('cx', d => d.x)
-                .attr('cy', d => d.y)
+                .attr('cx', v => v.x)
+                .attr('cy', v => v.y)
         })
 }
 
