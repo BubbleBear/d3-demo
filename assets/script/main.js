@@ -1,6 +1,6 @@
 let width = 960;
 let height = 600;
-let radius = 30;
+let radius = 35;
 
 const svg = d3.select('body')
     .append('svg')
@@ -34,7 +34,22 @@ function drawNodes(nodes) {
         .append('circle')
         .classed('avatar', true)
         .attr('r', radius)
-        .attr('fill-opacity', 0.5)
+}
+
+function definePatterns(nodes) {
+    return svg.append('g')
+        .selectAll('defs')
+        .data(nodes)
+        .enter()
+        .append('defs')
+        .append('pattern')
+        .attr('width', 1)
+        .attr('height', 1)
+        .attr('id', v => `force${v.id}`)
+        .append('image')
+        .attr('width', radius * 2)
+        .attr('height', radius * 2)
+        .attr('href', v => `assets/image/${v.image}`);
 }
 
 async function start() {
@@ -44,10 +59,9 @@ async function start() {
 
     let nodes = drawNodes(data.nodes);
 
-    nodes.append('image')
-        .attr('href', v => `assets/image/${v.image}`)
-        .attr('width', radius)
-        .attr('height', radius)
+    definePatterns(data.nodes);
+
+    nodes.attr('fill', v => `url(#force${v.id})`);
 
     simulation
         .nodes(data.nodes)
