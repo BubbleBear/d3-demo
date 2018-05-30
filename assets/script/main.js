@@ -59,8 +59,9 @@ function drawEdges(edges) {
         .classed('relation', true)
 }
 
-function definePatterns(nodes) {
+function drawAvatars(nodes) {
     return svg.append('g')
+        .classed('avatars', true)
         .selectAll('defs')
         .data(nodes)
         .enter()
@@ -78,12 +79,28 @@ function definePatterns(nodes) {
 async function start() {
     const data = await d3.json('relation.json');
 
-    let nodes = drawNodes(data.nodes);
-    definePatterns(data.nodes);
-    nodes.attr('fill', v => `url(#avatar${v.id})`);
+    // the order of drawing is essentiel, if nodes are drawn before edges
+    // they will be overlapped by edges
+
+    // draw edges
     let edges = drawEdges(data.edges);
 
+    // draw nodes
+    let nodes = drawNodes(data.nodes);
+
+    // draw avatars
+    drawAvatars(data.nodes);
+
+    // attach avatars to nodes
+    nodes.attr('fill', v => `url(#avatar${v.id})`);
+
+    nodes.call(d3.drag());
+
+    // init force simulation
     const simulation = initSimulation();
+
+    // attach nodes and edges to simulation
+    // plus attach event listeners to simulation
     simulation
         .nodes(data.nodes)
         .force('link', d3.forceLink()
