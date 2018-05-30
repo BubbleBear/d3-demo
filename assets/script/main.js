@@ -9,6 +9,9 @@ const svg = d3.select('body')
 
 const events = {
     drag: {
+        start(node, index, nodeDomList) {
+            ;
+        },
     },
     tick: (nodes, edges) => {
         return () => {
@@ -94,8 +97,6 @@ async function start() {
     // attach avatars to nodes
     nodes.attr('fill', v => `url(#avatar${v.id})`);
 
-    nodes.call(d3.drag());
-
     // init force simulation
     const simulation = initSimulation();
 
@@ -107,7 +108,15 @@ async function start() {
             .id(v => v.id)
             .links(data.edges)
         )
-        .on('tick', events.tick(nodes, edges))
+        .on('tick', events.tick(nodes, edges));
+
+    // invoke download menu
+    svg.on('contextmenu', (...args) => {
+        d3.event.preventDefault();
+        const pos = d3.mouse(document.body);
+        console.log(pos)
+        // saveSvgAsPng(document.querySelector('svg'), 'relation-force.png', {scale: 0.5})
+    })
 }
 
 start();
