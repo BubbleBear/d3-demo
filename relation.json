@@ -1,195 +1,182 @@
 ﻿{
     "nodes": [
         {
-            "id": 0,
-            "name": "云天河",
+            "id": "云天河",
             "image": "tianhe.png"
         },
         {
-            "id": 1,
-            "name": "韩菱纱",
+            "id": "韩菱纱",
             "image": "lingsha.png"
         },
         {
-            "id": 2,
-            "name": "柳梦璃",
+            "id": "柳梦璃",
             "image": "mengli.png"
         },
         {
-            "id": 3,
-            "name": "慕容紫英",
+            "id": "慕容紫英",
             "image": "ziying.png"
         },
         {
-            "id": 4,
-            "name": "云天青",
+            "id": "云天青",
             "image": "tianqing.png"
         },
         {
-            "id": 5,
-            "name": "夙玉",
+            "id": "夙玉",
             "image": "suyu.png"
         },
         {
-            "id": 6,
-            "name": "玄霄",
+            "id": "玄霄",
             "image": "xuanxiao.png"
         },
         {
-            "id": 7,
-            "name": "夙瑶",
+            "id": "夙瑶",
             "image": "suyao.png"
         },
         {
-            "id": 8,
-            "name": "太清",
+            "id": "太清",
             "image": "taiqing.png"
         },
         {
-            "id": 9,
-            "name": "宗炼",
+            "id": "宗炼",
             "image": "zonglian.png"
         },
         {
-            "id": 10,
-            "name": "婵幽",
+            "id": "婵幽",
             "image": "chanyou.png"
         },
         {
-            "id": 11,
-            "name": "奚仲",
+            "id": "奚仲",
             "image": "xizhong.png"
         },
         {
-            "id": 12,
-            "name": "归邪",
+            "id": "归邪",
             "image": "guixie.png"
         }
     ],
     "edges": [
         {
-            "source": 0,
-            "target": 1,
+            "source": "云天河",
+            "target": "韩菱纱",
             "relation": "挚友"
         },
         {
-            "source": 0,
-            "target": 2,
+            "source": "云天河",
+            "target": "柳梦璃",
             "relation": "挚友"
         },
         {
-            "source": 0,
-            "target": 3,
+            "source": "云天河",
+            "target": "慕容紫英",
             "relation": "挚友"
         },
         {
-            "source": 1,
-            "target": 2,
+            "source": "韩菱纱",
+            "target": "柳梦璃",
             "relation": "挚友"
         },
         {
-            "source": 1,
-            "target": 3,
+            "source": "韩菱纱",
+            "target": "慕容紫英",
             "relation": "挚友"
         },
         {
-            "source": 2,
-            "target": 3,
+            "source": "柳梦璃",
+            "target": "慕容紫英",
             "relation": "挚友"
         },
         {
-            "source": 0,
-            "target": 4,
+            "source": "云天河",
+            "target": "云天青",
             "relation": "父子"
         },
         {
-            "source": 0,
-            "target": 5,
+            "source": "云天河",
+            "target": "夙玉",
             "relation": "母子"
         },
         {
-            "source": 4,
-            "target": 5,
+            "source": "云天青",
+            "target": "夙玉",
             "relation": "夫妻"
         },
         {
-            "source": 0,
-            "target": 6,
+            "source": "云天河",
+            "target": "玄霄",
             "relation": "义兄弟"
         },
         {
-            "source": 4,
-            "target": 6,
+            "source": "云天青",
+            "target": "玄霄",
             "relation": "同门"
         },
         {
-            "source": 5,
-            "target": 6,
+            "source": "夙玉",
+            "target": "玄霄",
             "relation": "同门"
         },
         {
-            "source": 4,
-            "target": 7,
+            "source": "云天青",
+            "target": "夙瑶",
             "relation": "同门"
         },
         {
-            "source": 5,
-            "target": 7,
+            "source": "夙玉",
+            "target": "夙瑶",
             "relation": "同门"
         },
         {
-            "source": 6,
-            "target": 7,
+            "source": "玄霄",
+            "target": "夙瑶",
             "relation": "同门"
         },
         {
-            "source": 4,
-            "target": 8,
+            "source": "云天青",
+            "target": "太清",
             "relation": "师徒"
         },
         {
-            "source": 5,
-            "target": 8,
+            "source": "夙玉",
+            "target": "太清",
             "relation": "师徒"
         },
         {
-            "source": 6,
-            "target": 8,
+            "source": "玄霄",
+            "target": "太清",
             "relation": "师徒"
         },
         {
-            "source": 7,
-            "target": 8,
+            "source": "夙瑶",
+            "target": "太清",
             "relation": "师徒"
         },
         {
-            "source": 8,
-            "target": 9,
+            "source": "太清",
+            "target": "宗炼",
             "relation": "同门"
         },
         {
-            "source": 3,
-            "target": 9,
+            "source": "慕容紫英",
+            "target": "宗炼",
             "relation": "师徒"
         },
         {
-            "source": 2,
-            "target": 10,
+            "source": "柳梦璃",
+            "target": "婵幽",
             "relation": "母子"
         },
         {
-            "source": 10,
-            "target": 11,
+            "source": "婵幽",
+            "target": "奚仲",
             "relation": "主臣"
         },
         {
-            "source": 10,
-            "target": 12,
+            "source": "婵幽",
+            "target": "归邪",
             "relation": "主臣"
         },
         {
-            "source": 11,
-            "target": 12,
+            "source": "奚仲",
+            "target": "归邪",
             "relation": "同僚"
         }
     ]

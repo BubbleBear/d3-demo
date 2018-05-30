@@ -10,6 +10,19 @@ const svg = d3.select('body')
 const events = {
     drag: {
     },
+    tick: (nodes, edges) => {
+        return () => {
+            nodes
+                .attr('cx', v => v.x)
+                .attr('cy', v => v.y);
+    
+            edges
+                .attr('x1', v => v.source.x)
+                .attr('y1', v => v.source.y)
+                .attr('x2', v => v.target.x)
+                .attr('y2', v => v.target.y)
+        }
+    },
 };
 
 function initSimulation() {
@@ -28,12 +41,22 @@ function initSimulation() {
 function drawNodes(nodes) {
     return svg.append('g')
         .classed('nodes', true)
-        .selectAll('.avatar')
+        .selectAll('circle.person')
         .data(nodes)
         .enter()
         .append('circle')
-        .classed('avatar', true)
+        .classed('person', true)
         .attr('r', radius)
+}
+
+function drawEdges(edges) {
+    return svg.append('g')
+        .classed('edges', true)
+        .selectAll('line.relation')
+        .data(edges)
+        .enter()
+        .append('line')
+        .classed('relation', true)
 }
 
 function definePatterns(nodes) {
@@ -45,7 +68,7 @@ function definePatterns(nodes) {
         .append('pattern')
         .attr('width', 1)
         .attr('height', 1)
-        .attr('id', v => `force${v.id}`)
+        .attr('id', v => `avatar${v.id}`)
         .append('image')
         .attr('width', radius * 2)
         .attr('height', radius * 2)
@@ -55,21 +78,19 @@ function definePatterns(nodes) {
 async function start() {
     const data = await d3.json('relation.json');
 
-    const simulation = initSimulation();
-
     let nodes = drawNodes(data.nodes);
-
     definePatterns(data.nodes);
+    nodes.attr('fill', v => `url(#avatar${v.id})`);
+    let edges = drawEdges(data.edges);
 
-    nodes.attr('fill', v => `url(#force${v.id})`);
-
+    const simulation = initSimulation();
     simulation
         .nodes(data.nodes)
-        .on('tick', () => {
-            nodes
-                .attr('cx', v => v.x)
-                .attr('cy', v => v.y)
-        })
+        .force('link', d3.forceLink()
+            .id(v => v.id)
+            .links(data.edges)
+        )
+        .on('tick', events.tick(nodes, edges))
 }
 
 start();

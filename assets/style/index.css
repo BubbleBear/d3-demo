@@ -1,0 +1,10 @@
+circle.person {
+    stroke: rgb(255, 255, 255);
+    stroke-width: 1.5;
+}
+
+line.relation {
+    stroke: rgb(223, 186, 186);
+    stroke-width: 2;
+    stroke-opacity: 0.6;
+}
