@@ -35,6 +35,6 @@ const router = new Proxy({
         if (Reflect.ownKeys(_).includes(path)) {
             return _[path];
         }
-        return respond(resolve(root, path));
+        return respond(resolve(root, 'assets', path));
     }
 })

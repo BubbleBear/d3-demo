@@ -1,3 +1,5 @@
+import events from './events.js';
+
 let width = 1200;
 let height = 900;
 let radius = 35;
@@ -6,31 +8,6 @@ const svg = d3.select('body')
     .append('svg')
     .attr('width', width)
     .attr('height', height);
-
-const canvas = d3.select('body')
-    .append('canvas')
-    .attr('id', 'canvas')
-
-const events = {
-    drag: {
-        start(node, index, nodeDomList) {
-            ;
-        },
-    },
-    tick: (nodes, edges) => {
-        return () => {
-            nodes
-                .attr('cx', v => v.x)
-                .attr('cy', v => v.y);
-    
-            edges
-                .attr('x1', v => v.source.x)
-                .attr('y1', v => v.source.y)
-                .attr('x2', v => v.target.x)
-                .attr('y2', v => v.target.y)
-        }
-    },
-};
 
 function initSimulation() {
     return d3.forceSimulation()
@@ -80,7 +57,14 @@ function drawAvatars(nodes) {
         .append('image')
         .attr('width', radius * 2)
         .attr('height', radius * 2)
-        .attr('xlink:href', v => `assets/image/${v.image}`);
+        .attr('xlink:href', v => `image/${v.image}`);
+}
+
+function saveSvg() {
+    saveSvgAsPng(document.querySelector('svg'), 'relation-force', {
+        encoderOptions: 1,
+        encoderType: 'image/png',
+    });
 }
 
 async function start() {
@@ -118,20 +102,7 @@ async function start() {
     svg.on('contextmenu', (...args) => {
         d3.event.preventDefault();
         const pos = d3.mouse(document.body);
-
-        canvg('canvas', document.querySelector('svg').outerHTML, {
-            log: true,
-            ignoreMouse: true,
-            ignoreAnimation: true,
-            ingoreClear: true,
-            useCORS: true,
-        })
-
-        // html2canvas(document.body, {
-        //     allowTaint: true,
-        // }).then(canvas => {
-        //     document.body.appendChild(canvas)
-        // });
+        // saveSvg();        
     })
 }
 
