@@ -11,7 +11,7 @@ const server = http.createServer()
     })
     .listen(process.argv[2] || 8888);
 
-const CONTENT_TYPES = {
+const mime = {
     '.html': 'text/html',
     '.js': 'application/javascript',
 };
@@ -20,8 +20,9 @@ function respond(path) {
     return (req, res) => {
         console.log('path: ', path);
         const ext = extname(path);
-        CONTENT_TYPES[ext] && res.writeHead(200, { 'Content-Type': CONTENT_TYPES[ext] });
+        mime[ext] && res.writeHead(200, { 'Content-Type': mime[ext] });
         fs.createReadStream(path).on('error', err => {
+            res.writeHead(404);
             res.end(err.message);
         }).pipe(res);
     }
