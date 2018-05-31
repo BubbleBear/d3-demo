@@ -7,6 +7,10 @@ const svg = d3.select('body')
     .attr('width', width)
     .attr('height', height);
 
+const canvas = d3.select('body')
+    .append('canvas')
+    .attr('id', 'canvas')
+
 const events = {
     drag: {
         start(node, index, nodeDomList) {
@@ -114,8 +118,20 @@ async function start() {
     svg.on('contextmenu', (...args) => {
         d3.event.preventDefault();
         const pos = d3.mouse(document.body);
-        console.log(pos)
-        // saveSvgAsPng(document.querySelector('svg'), 'relation-force.png', {scale: 0.5})
+
+        canvg('canvas', document.querySelector('svg').outerHTML, {
+            log: true,
+            ignoreMouse: true,
+            ignoreAnimation: true,
+            ingoreClear: true,
+            useCORS: true,
+        })
+
+        // html2canvas(document.body, {
+        //     allowTaint: true,
+        // }).then(canvas => {
+        //     document.body.appendChild(canvas)
+        // });
     })
 }
 

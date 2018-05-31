@@ -1,6 +1,6 @@
 const fs = require('fs');
 const http = require('http');
-const { resolve } = require('path');
+const { resolve, extname } = require('path');
 
 const root = resolve(__dirname, '../');
 
@@ -11,9 +11,16 @@ const server = http.createServer()
     })
     .listen(process.argv[2] || 8888);
 
+const CONTENT_TYPES = {
+    '.html': 'text/html',
+    '.js': 'application/javascript',
+};
+
 function respond(path) {
     return (req, res) => {
         console.log('path: ', path);
+        const ext = extname(path);
+        CONTENT_TYPES[ext] && res.writeHead(200, { 'Content-Type': CONTENT_TYPES[ext] });
         fs.createReadStream(path).on('error', err => {
             res.end(err.message);
         }).pipe(res);
