@@ -1,7 +1,18 @@
 export default {
     drag: {
-        start(node, index, nodeDomList) {
-            ;
+        start(target, index, nodes) {
+            d3.select(this)
+                .classed('dragging', true)
+        },
+        drag(target, index, nodes) {
+            const x = d3.select(this)
+                .raise()
+                .attr('cx', target.x = d3.event.x)
+                .attr('cy', target.y = d3.event.y)
+        },
+        end(target, index, nodes) {
+            d3.select(this)
+                .classed('dragging', false)
         },
     },
     tick: (nodes, edges) => {

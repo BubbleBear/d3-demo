@@ -91,6 +91,11 @@ async function start() {
     // attach avatars to nodes
     nodes.attr('fill', v => `url(#avatar${v.id})`);
 
+    nodes.call(d3.drag()
+        .on('start', events.drag.start)
+        .on('drag', events.drag.drag)
+        .on('end', events.drag.end));
+
     // init force simulation
     const simulation = initSimulation();
 
@@ -104,8 +109,9 @@ async function start() {
         )
         .on('tick', events.tick(nodes, edges));
 
-    // invoke download menu
+    // register linstener for download
     svg.on('contextmenu', () => {
+        // invoke download menu
         download();
     })
 }
