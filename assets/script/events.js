@@ -7,8 +7,8 @@ export default {
         drag(target, index, nodes) {
             const x = d3.select(this)
                 .raise()
-                .attr('cx', target.x = d3.event.x)
-                .attr('cy', target.y = d3.event.y)
+                .attr('cx', target.fx = d3.event.x)
+                .attr('cy', target.fy = d3.event.y)
         },
         end(target, index, nodes) {
             d3.select(this)
