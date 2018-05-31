@@ -318,15 +318,20 @@
             return;
           } else throw e;
         }
-        done(png);
+        typeof done === 'function' && done(png);
+        return png;
       }
   
       if (canvg) out$.prepareSvg(el, options, convertToPng);
-      else out$.svgAsDataUri(el, options, uri => {
+      else return out$.svgAsDataUri(el, options, uri => {
         const image = new Image();
-        image.onload = () => convertToPng(image, image.width, image.height);
-        image.onerror = () => console.error(`There was an error loading the data URI as an image on the following SVG\n${window.atob(uri.slice(26))}Open the following link to see browser's diagnosis\n${uri}`);
         image.src = uri;
+        return new Promise((resolve, reject) => {
+          image.onload = () => {
+            const imageURI = convertToPng(image, image.width, image.height);
+            resolve(imageURI);
+          }
+        });
       });
     };
   

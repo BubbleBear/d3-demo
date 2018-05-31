@@ -1,4 +1,5 @@
 import events from './events.js';
+import createMenu from './menu.js';
 
 let width = 1200;
 let height = 900;
@@ -60,10 +61,15 @@ function drawAvatars(nodes) {
         .attr('xlink:href', v => `image/${v.image}`);
 }
 
-function saveSvg() {
-    saveSvgAsPng(document.querySelector('svg'), 'relation-force', {
-        encoderOptions: 1,
-        encoderType: 'image/png',
+async function download() {
+    d3.event.preventDefault();
+    const svg = document.querySelector('svg');
+    const pos = d3.mouse(document.body);
+
+    createMenu(pos, 'relation-force', {
+        svg: await svgAsDataUri(svg),
+        png: await svgAsPngUri(svg, {encoderType: 'image/png'}),
+        jpeg: await svgAsPngUri(svg, {encoderType: 'image/jpeg'}),
     });
 }
 
@@ -99,10 +105,8 @@ async function start() {
         .on('tick', events.tick(nodes, edges));
 
     // invoke download menu
-    svg.on('contextmenu', (...args) => {
-        d3.event.preventDefault();
-        const pos = d3.mouse(document.body);
-        // saveSvg();        
+    svg.on('contextmenu', () => {
+        download();
     })
 }
 
