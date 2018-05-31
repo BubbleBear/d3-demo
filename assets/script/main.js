@@ -80,7 +80,7 @@ function drawAvatars(nodes) {
         .append('image')
         .attr('width', radius * 2)
         .attr('height', radius * 2)
-        .attr('href', v => `assets/image/${v.image}`);
+        .attr('xlink:href', v => `assets/image/${v.image}`);
 }
 
 async function start() {
