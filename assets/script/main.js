@@ -124,7 +124,6 @@ async function start() {
         simulation.stop();
     })
     .on('menustop', () => {
-        console.log('asdf')
         simulation.restart();
     })
 }
