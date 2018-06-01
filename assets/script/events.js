@@ -2,7 +2,7 @@ export default (ctx) => {
     return {
         drag: {
             start(target, index, nodes) {
-                ctx.alphaTarget(0.3).restart();
+                ctx.alphaTarget(0).restart();
                 d3.select(this)
                     .classed('dragging', true)
             },
@@ -18,10 +18,11 @@ export default (ctx) => {
                 }
 
                 d3.select(this)
-                    .attr('cx', target.fx = d3.event.x)
-                    .attr('cy', target.fy = d3.event.y)
+                    .attr('cx', target.x = d3.event.x)
+                    .attr('cy', target.y = d3.event.y)
             },
             end(target, index, nodes) {
+                ctx.alphaTarget(0.01);
                 d3.select(this)
                     .classed('dragging', false)
             },
