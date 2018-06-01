@@ -119,9 +119,14 @@ async function start() {
         download();
     })
 
-    // simulation.on('start', () => {
-    //     console.log('asdf')
-    // })
+    d3.select('body')
+    .on('menustart', () => {
+        simulation.stop();
+    })
+    .on('menustop', () => {
+        console.log('asdf')
+        simulation.restart();
+    })
 }
 
 start();

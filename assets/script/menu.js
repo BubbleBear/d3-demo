@@ -52,7 +52,9 @@ export default (pos, filename, listMap) => {
         .style('top', `${pos[1]}px`)
         .on('mouseleave', () => {
             menu.remove();
-            d3.dispatch('menustop');
+            menu.dispatch('menustop', {
+                bubbles: true,
+            });
         })
         .dispatch('menustart', {
             bubbles: true,
