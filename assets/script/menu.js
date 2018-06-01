@@ -44,22 +44,25 @@ export default (pos, filename, listMap) => {
             .attr('id', 'downloadable-css')
             .text(css)
     }
+
+    function stopped() {
+        menu.dispatch('menustop', {
+            bubbles: true,
+        });
+        menu.remove();
+    }
     
     const menu = d3.select('body')
+        .on('click', stopped)
         .append('ul')
         .classed('download-menu', true)
         .style('left', `${pos[0]}px`)
         .style('top', `${pos[1]}px`)
-        .on('mouseleave', () => {
-            menu.dispatch('menustop', {
-                bubbles: true,
-            });
-            menu.remove();
-        })
+        .on('mouseleave', stopped)
         .dispatch('menustart', {
             bubbles: true,
         });
-        
+
     const list = menu
         .append('li')
 
