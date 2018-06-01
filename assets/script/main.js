@@ -120,12 +120,8 @@ async function start() {
     })
 
     d3.select('body')
-    .on('menustart', () => {
-        simulation.stop();
-    })
-    .on('menustop', () => {
-        simulation.restart();
-    })
+        .on('simupause', events.custom.simupause)
+        .on('simuresume', events.custom.simuresume)
 }
 
 start();

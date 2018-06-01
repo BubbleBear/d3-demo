@@ -1,4 +1,4 @@
-export default (ctx) => {
+export default (simulation) => {
     return {
         drag: {
             start(target, index, nodes) {
@@ -6,32 +6,38 @@ export default (ctx) => {
                     .classed('dragging', true)
             },
             drag(target, index, nodes) {
-                ctx.alphaTarget(0).restart();
-                const { clientWidth, clientHeight } = document.body;
-
-                // restrict drag area within client
-                if (d3.event.x > clientWidth
-                    || d3.event.x < 0
-                    || d3.event.y > clientHeight
-                    || d3.event.y < 0) {
-                    return;
-                }
+                simulation
+                    .alphaTarget(0)
+                    .restart();
 
                 d3.select(this)
                     .attr('cx', target.x = d3.event.x)
                     .attr('cy', target.y = d3.event.y)
             },
             end(target, index, nodes) {
-                ctx.alphaTarget(0.01).restart();
+                simulation
+                    .alphaTarget(0)
+                    .restart();
+
                 d3.select(this)
                     .classed('dragging', false)
             },
         },
         tick: (nodes, edges) => {
+            const { clientWidth, clientHeight } = document.querySelector('svg');
+
             return () => {
                 nodes
-                    .attr('cx', v => v.x)
-                    .attr('cy', v => v.y);
+                    .attr('cx', (target, index, nodes) => {
+                        target.x < 0 && (target.x = 0)
+                            || target.x > clientWidth && (target.x = clientWidth);
+                        return target.x;
+                    })
+                    .attr('cy', (target, index, nodes) => {
+                        target.y < 0 && (target.y = 0)
+                            || target.y > clientHeight && (target.y = clientHeight);
+                        return target.y;
+                    });
 
                 edges
                     .attr('x1', v => v.source.x)
@@ -40,5 +46,13 @@ export default (ctx) => {
                     .attr('y2', v => v.target.y)
             }
         },
+        custom: {
+            simupause() {
+                simulation.stop();
+            },
+            simuresume() {
+                simulation.restart();
+            }
+        }
     };
 };

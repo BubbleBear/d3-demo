@@ -46,7 +46,7 @@ export default (pos, filename, listMap) => {
     }
 
     function stopped() {
-        menu.dispatch('menustop', {
+        menu.dispatch('simuresume', {
             bubbles: true,
         });
         menu.remove();
@@ -59,7 +59,7 @@ export default (pos, filename, listMap) => {
         .style('left', `${pos[0]}px`)
         .style('top', `${pos[1]}px`)
         .on('mouseleave', stopped)
-        .dispatch('menustart', {
+        .dispatch('simupause', {
             bubbles: true,
         });
 
