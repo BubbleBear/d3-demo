@@ -1,4 +1,4 @@
-import events from './events.js';
+import eventsWrapper from './events.js';
 import createMenu from './menu.js';
 
 let width = 1200;
@@ -91,13 +91,15 @@ async function start() {
     // attach avatars to nodes
     nodes.attr('fill', v => `url(#avatar${v.id})`);
 
+    // init force simulation
+    const simulation = initSimulation();
+
+    const events = eventsWrapper(simulation);
+
     nodes.call(d3.drag()
         .on('start', events.drag.start)
         .on('drag', events.drag.drag)
         .on('end', events.drag.end));
-
-    // init force simulation
-    const simulation = initSimulation();
 
     // attach nodes and edges to simulation
     // plus attach event listeners to simulation
