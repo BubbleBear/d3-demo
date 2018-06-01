@@ -27,6 +27,7 @@ export default (simulation) => {
             const nodes = d3.selectAll('circle.person');
             const edges = d3.selectAll('line.relation');
             const nodeTexts = d3.selectAll('text.name');
+            const edgeTexts = d3.selectAll('text.relation');
             const { clientWidth, clientHeight } = document.querySelector('svg');
 
             nodes
@@ -49,7 +50,11 @@ export default (simulation) => {
 
             nodeTexts
                 .attr('x', v => v.x)
-                .attr('y', v => v.y)
+                .attr('y', v => v.y);
+
+            edgeTexts
+                .attr('x', v => (v.source.x + v.target.x) / 2)
+                .attr('y', v => (v.source.y + v.target.y) / 2);
         },
         custom: {
             simupause() {

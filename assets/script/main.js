@@ -72,6 +72,19 @@ function drawEdges(data) {
     return edges;
 }
 
+function drawEdgeTexts(data) {
+    const texts = svg.append('g')
+        .classed('edge-texts', true)
+        .selectAll('text.relation')
+        .data(data)
+        .enter()
+        .append('text')
+        .classed('relation', true)
+        .text(v => v.relation);
+
+    return texts;
+}
+
 function drawAvatars(nodes) {
     const avatars = svg.append('g')
         .classed('avatars', true)
@@ -126,11 +139,11 @@ async function start() {
 
     // draw edges
     let edges = drawEdges(data.edges);
+    drawEdgeTexts(data.edges);
 
     // draw nodes
     let nodes = drawNodes(data.nodes);
-
-    let texts = drawNodeTexts(data.nodes);
+    drawNodeTexts(data.nodes);
 
     // draw avatars
     drawAvatars(data.nodes);
