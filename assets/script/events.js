@@ -23,28 +23,33 @@ export default (simulation) => {
                     .classed('dragging', false)
             },
         },
-        tick: (nodes, edges) => {
+        tick: () => {
+            const nodes = d3.selectAll('circle.person');
+            const edges = d3.selectAll('line.relation');
+            const nodeTexts = d3.selectAll('text.name');
             const { clientWidth, clientHeight } = document.querySelector('svg');
 
-            return () => {
-                nodes
-                    .attr('cx', (target, index, nodes) => {
-                        target.x < 0 && (target.x = 0)
-                            || target.x > clientWidth && (target.x = clientWidth);
-                        return target.x;
-                    })
-                    .attr('cy', (target, index, nodes) => {
-                        target.y < 0 && (target.y = 0)
-                            || target.y > clientHeight && (target.y = clientHeight);
-                        return target.y;
-                    });
+            nodes
+                .attr('cx', (target, index, nodes) => {
+                    target.x < 0 && (target.x = 0)
+                        || target.x > clientWidth && (target.x = clientWidth);
+                    return target.x;
+                })
+                .attr('cy', (target, index, nodes) => {
+                    target.y < 0 && (target.y = 0)
+                        || target.y > clientHeight && (target.y = clientHeight);
+                    return target.y;
+                });
 
-                edges
-                    .attr('x1', v => v.source.x)
-                    .attr('y1', v => v.source.y)
-                    .attr('x2', v => v.target.x)
-                    .attr('y2', v => v.target.y)
-            }
+            edges
+                .attr('x1', v => v.source.x)
+                .attr('y1', v => v.source.y)
+                .attr('x2', v => v.target.x)
+                .attr('y2', v => v.target.y);
+
+            nodeTexts
+                .attr('x', v => v.x)
+                .attr('y', v => v.y)
         },
         custom: {
             simupause() {

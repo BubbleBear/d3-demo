@@ -1,9 +1,10 @@
 import eventsWrapper from './events.js';
 import createMenu from './menu.js';
 
-let width = 1200;
-let height = 900;
-let radius = 35;
+const width = 1200;
+const height = 900;
+const radius = 35;
+const fontSize = 16;
 
 const svg = d3.select('body')
     .append('svg')
@@ -14,42 +15,67 @@ function initSimulation() {
     return d3.forceSimulation()
         .force('centering', d3.forceCenter(width / 2, height / 2))
         .force('collision', d3.forceCollide()
-            .radius(radius * 2)
-            .strength(0.7))
+            .radius(radius * 1.05)
+            .strength(0.7)
+        )
         .force('many-body', d3.forceManyBody()
             .strength(-10)  // negative to push away, positive to draw each other
             .theta(0.9)     // dunno wtf is this
-            .distanceMin(radius)
-            .distanceMax(radius * 5))
-        .alpha(0.1)
+            .distanceMin(1)
+            .distanceMax(Infinity)
+        )
+        .alpha(0.01)
         .restart();
 }
 
-function drawNodes(nodes) {
-    return svg.append('g')
+function drawNodes(data) {
+    const nodes = svg.append('g')
         .classed('nodes', true)
         .selectAll('circle.person')
-        .data(nodes)
+        .data(data)
         .enter()
         .append('circle')
         .classed('person', true)
         .attr('r', radius);
+
+    return nodes;
 }
 
-function drawEdges(edges) {
-    return svg.append('g')
+function drawNodeTexts(data) {
+    const texts = svg.append('g')
+        .classed('node-texts', true)
+        .selectAll('text.name')
+        .data(data)
+        .enter()
+        .append('text')
+        .classed('name', true)
+        .text(v => v.id)
+        .attr('dx', v => {
+            const length = v.id.length;
+            return - length / 2 * fontSize;
+        })
+        .attr('dy', radius * 1.5)
+        .attr('style', `font-size:${fontSize};`);
+
+    return texts;
+}
+
+function drawEdges(data) {
+    const edges = svg.append('g')
         .classed('edges', true)
         .selectAll('line.relation')
-        .data(edges)
+        .data(data)
         .enter()
         .append('line')
         .classed('relation', true);
+
+    return edges;
 }
 
 function drawAvatars(nodes) {
-    return svg.append('g')
+    const avatars = svg.append('g')
         .classed('avatars', true)
-        .selectAll('defs')
+        .selectAll('.avatars defs')
         .data(nodes)
         .enter()
         .append('defs')
@@ -61,6 +87,8 @@ function drawAvatars(nodes) {
         .attr('width', radius * 2)
         .attr('height', radius * 2)
         .attr('xlink:href', v => `image/${v.image}`);
+
+    return avatars;
 }
 
 async function download() {
@@ -78,30 +106,10 @@ async function download() {
 async function start() {
     const data = await d3.json('relation.json');
 
-    // the order of drawing is essentiel, if nodes are drawn before edges
-    // they will be overlapped by edges
-
-    // draw edges
-    let edges = drawEdges(data.edges);
-
-    // draw nodes
-    let nodes = drawNodes(data.nodes);
-
-    // draw avatars
-    drawAvatars(data.nodes);
-
-    // attach avatars to nodes
-    nodes.attr('fill', v => `url(#avatar${v.id})`);
-
     // init force simulation
     const simulation = initSimulation();
 
     const events = eventsWrapper(simulation);
-
-    nodes.call(d3.drag()
-        .on('start', events.drag.start)
-        .on('drag', events.drag.drag)
-        .on('end', events.drag.end));
 
     // attach nodes and edges to simulation
     // plus attach event listeners to simulation
@@ -111,7 +119,29 @@ async function start() {
             .id(v => v.id)
             .links(data.edges)
         )
-        .on('tick', events.tick(nodes, edges));
+        .on('tick', events.tick);
+
+    // the order of drawing is essentiel, if nodes are drawn before edges
+    // they will be overlapped by edges
+
+    // draw edges
+    let edges = drawEdges(data.edges);
+
+    // draw nodes
+    let nodes = drawNodes(data.nodes);
+
+    let texts = drawNodeTexts(data.nodes);
+
+    // draw avatars
+    drawAvatars(data.nodes);
+
+    // attach avatars to nodes
+    nodes.attr('fill', v => `url(#avatar${v.id})`);
+
+    nodes.call(d3.drag()
+        .on('start', events.drag.start)
+        .on('drag', events.drag.drag)
+        .on('end', events.drag.end));
 
     // register linstener for download
     svg.on('contextmenu', () => {

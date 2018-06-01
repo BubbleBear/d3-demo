@@ -14,6 +14,7 @@ const server = http.createServer()
 const mime = {
     '.html': 'text/html',
     '.js': 'application/javascript',
+    '.css': 'text/css',
 };
 
 function respond(path) {
