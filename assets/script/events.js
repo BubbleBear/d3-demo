@@ -2,11 +2,11 @@ export default (ctx) => {
     return {
         drag: {
             start(target, index, nodes) {
-                ctx.alphaTarget(0).restart();
                 d3.select(this)
                     .classed('dragging', true)
             },
             drag(target, index, nodes) {
+                ctx.alphaTarget(0).restart();
                 const { clientWidth, clientHeight } = document.body;
 
                 // restrict drag area within client
@@ -22,7 +22,7 @@ export default (ctx) => {
                     .attr('cy', target.y = d3.event.y)
             },
             end(target, index, nodes) {
-                ctx.alphaTarget(0.01);
+                ctx.alphaTarget(0.01).restart();
                 d3.select(this)
                     .classed('dragging', false)
             },

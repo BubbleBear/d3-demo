@@ -51,8 +51,13 @@ export default (pos, filename, listMap) => {
         .style('left', `${pos[0]}px`)
         .style('top', `${pos[1]}px`)
         .on('mouseleave', () => {
-            menu.remove()
+            menu.remove();
+            d3.dispatch('menustop');
         })
+        .dispatch('menustart', {
+            bubbles: true,
+        });
+        
     const list = menu
         .append('li')
 

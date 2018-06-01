@@ -21,6 +21,8 @@ function initSimulation() {
             .theta(0.9)     // dunno wtf is this
             .distanceMin(radius)
             .distanceMax(radius * 5))
+        .alpha(0.1)
+        .restart();
 }
 
 function drawNodes(nodes) {
@@ -31,7 +33,7 @@ function drawNodes(nodes) {
         .enter()
         .append('circle')
         .classed('person', true)
-        .attr('r', radius)
+        .attr('r', radius);
 }
 
 function drawEdges(edges) {
@@ -41,7 +43,7 @@ function drawEdges(edges) {
         .data(edges)
         .enter()
         .append('line')
-        .classed('relation', true)
+        .classed('relation', true);
 }
 
 function drawAvatars(nodes) {
@@ -116,6 +118,10 @@ async function start() {
         // invoke download menu
         download();
     })
+
+    // simulation.on('start', () => {
+    //     console.log('asdf')
+    // })
 }
 
 start();
