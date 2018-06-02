@@ -12,3 +12,12 @@ line.relation {
 text.name {
     font-family: 'Wawati SC', 'Cute';
 }
+
+text.relation {
+    visibility: hidden;
+    font-family: 'Wawati SC', 'Cute';
+}
+
+text.relation_show {
+    visibility: visible;
+}

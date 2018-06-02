@@ -35,7 +35,7 @@ function drawNodes(data) {
         .data(data)
         .enter()
         .append('circle')
-        .classed('person', true)
+        .attr('class', v => `person ${v.id}`)
         .attr('r', radius);
 
     return nodes;
@@ -48,7 +48,7 @@ function drawNodeTexts(data) {
         .data(data)
         .enter()
         .append('text')
-        .classed('name', true)
+        .attr('class', v => `name ${v.id}`)
         .text(v => v.id)
         .attr('dx', v => {
             const length = v.id.length;
@@ -67,7 +67,7 @@ function drawEdges(data) {
         .data(data)
         .enter()
         .append('line')
-        .classed('relation', true);
+        .attr('class', v => `relation ${(v.source.id)} ${(v.target.id)}`);
 
     return edges;
 }
@@ -79,7 +79,7 @@ function drawEdgeTexts(data) {
         .data(data)
         .enter()
         .append('text')
-        .classed('relation', true)
+        .attr('class', v => `relation ${(v.source.id)} ${(v.target.id)}`)
         .text(v => v.relation);
 
     return texts;
@@ -154,7 +154,15 @@ async function start() {
     nodes.call(d3.drag()
         .on('start', events.drag.start)
         .on('drag', events.drag.drag)
-        .on('end', events.drag.end));
+        .on('end', events.drag.end))
+        .on('mouseenter', v => {
+            d3.selectAll(`.relation.${v.id}`)
+                .classed('relation_show', true);
+        })
+        .on('mouseleave', v => {
+            d3.selectAll(`.relation.${v.id}`)
+                .classed('relation_show', false);
+        })
 
     // register linstener for download
     svg.on('contextmenu', () => {
