@@ -26,7 +26,7 @@ export default (simulation) => {
         tick: () => {
             const nodes = d3.selectAll('circle.person');
             const edges = d3.selectAll('line.relation');
-            const nodeTexts = d3.selectAll('text.name');
+            const nodeTexts = d3.selectAll('text.person');
             const edgeTexts = d3.selectAll('text.relation');
             const { clientWidth, clientHeight } = document.querySelector('svg');
 
@@ -62,7 +62,25 @@ export default (simulation) => {
             },
             simuresume() {
                 simulation.restart();
-            }
+            },
+            showRelation(target, index, nodes) {
+                d3.selectAll(`.relation.${target.id}`)
+                    .classed('relation-show', true);
+            },
+            hideRelation(target, index, nodes) {
+                d3.selectAll(`.relation.${target.id}`)
+                    .classed('relation-show', false);
+            },
+            add(target, index, nodes) {},
+            reset(target, index, nodes) {},
+            remove(target, index, nodes) {
+                const person = d3.selectAll(`.person.${target.id}`);
+                const allAboutIt = d3.selectAll(`.${target.id}`);
+                if (person.attr('class').includes('remove')) {
+                    allAboutIt.remove();
+                }
+            },
+            link(target, index, nodes) {},
         }
     };
 };

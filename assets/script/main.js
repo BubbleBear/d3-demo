@@ -1,5 +1,6 @@
 import eventsWrapper from './events.js';
 import createMenu from './menu.js';
+import initPanel from './panel.js';
 
 const width = 1200;
 const height = 900;
@@ -44,11 +45,11 @@ function drawNodes(data) {
 function drawNodeTexts(data) {
     const texts = svg.append('g')
         .classed('node-texts', true)
-        .selectAll('text.name')
+        .selectAll('text.person')
         .data(data)
         .enter()
         .append('text')
-        .attr('class', v => `name ${v.id}`)
+        .attr('class', v => `person ${v.id}`)
         .text(v => v.id)
         .attr('dx', v => {
             const length = v.id.length;
@@ -155,14 +156,9 @@ async function start() {
         .on('start', events.drag.start)
         .on('drag', events.drag.drag)
         .on('end', events.drag.end))
-        .on('mouseenter', v => {
-            d3.selectAll(`.relation.${v.id}`)
-                .classed('relation_show', true);
-        })
-        .on('mouseleave', v => {
-            d3.selectAll(`.relation.${v.id}`)
-                .classed('relation_show', false);
-        })
+        .on('mouseenter', events.custom.showRelation)
+        .on('mouseleave', events.custom.hideRelation)
+        .on('click', events.custom.remove)
 
     // register linstener for download
     svg.on('contextmenu', () => {
@@ -173,6 +169,8 @@ async function start() {
     d3.select('body')
         .on('simupause', events.custom.simupause)
         .on('simuresume', events.custom.simuresume)
+
+    initPanel();
 }
 
 start();

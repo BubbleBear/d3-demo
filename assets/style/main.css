@@ -16,7 +16,7 @@ line.relation {
     stroke-opacity: 0.6;
 }
 
-text.name {
+text.person {
     font-family: 'Wawati SC', 'Cute';
 }
 
@@ -25,7 +25,7 @@ text.relation {
     font-family: 'Wawati SC', 'Cute';
 }
 
-text.relation_show {
+text.relation-show {
     visibility: visible;
 }
 
@@ -46,8 +46,14 @@ text.relation_show {
 }
 
 .icon.button:hover {
+    opacity: 0.5;
 }
 
 .person.remove {
-    cursor: url('/image/icon/saber.png'), auto;
+    cursor: url('/image/icon/sword.png'), auto;
+}
+
+.person.remove:hover {
+    opacity: 0.5;
+    /* background: radial-gradient(circle at center, red 0, blue, green 100%) */
 }
