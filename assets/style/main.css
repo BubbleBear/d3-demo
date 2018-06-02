@@ -1,3 +1,10 @@
+body {
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}
+
 circle.person {
     stroke: rgb(211, 173, 233);
     stroke-width: 1.5;
@@ -20,4 +27,27 @@ text.relation {
 
 text.relation_show {
     visibility: visible;
+}
+
+.panel {
+    position: fixed;
+    bottom: 0;
+    height: 30%;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.icon.button {
+    width: 30px;
+    height: 30px;
+    cursor: url('/image/icon/magic-wand.png'), auto;
+}
+
+.icon.button:hover {
+}
+
+.person.remove {
+    cursor: url('/image/icon/saber.png'), auto;
 }

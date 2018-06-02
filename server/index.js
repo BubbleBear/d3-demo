@@ -15,6 +15,8 @@ const mime = {
     '.html': 'text/html',
     '.js': 'application/javascript',
     '.css': 'text/css',
+    '.svg': 'image/svg+xml',
+    '.png': 'image/png',
 };
 
 function respond(path) {
