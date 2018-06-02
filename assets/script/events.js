@@ -1,3 +1,5 @@
+import dialog from './dialog.js';
+
 export default (simulation) => {
     return {
         drag: {
@@ -57,10 +59,10 @@ export default (simulation) => {
                 .attr('y', v => (v.source.y + v.target.y) / 2);
         },
         custom: {
-            simupause() {
+            simuPause() {
                 simulation.stop();
             },
-            simuresume() {
+            simuResume() {
                 simulation.restart();
             },
             showRelation(target, index, nodes) {

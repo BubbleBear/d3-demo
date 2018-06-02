@@ -12,11 +12,11 @@ export default () => {
     const persons = d3.selectAll('.person');
     const relations = d3.selectAll('.relation');
 
-    let flag = 1;
+    let removeFlag = 1;
 
     remove.on('click', (target, index, nodes) => {
-        persons.classed('remove', flag);
-        remove.attr('src', garbageSet[flag]);
-        flag = (flag + 1) % 2;
+        persons.classed('remove', removeFlag);
+        remove.attr('src', garbageSet[removeFlag]);
+        removeFlag = (removeFlag + 1) % 2;
     });
 }

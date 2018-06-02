@@ -11,13 +11,20 @@
 </head>
 <body>
     <div class="panel">
-        <img class="icon button add" src="./image/icon/plus.svg">
+        <img class="icon button add" src="./image/icon/plus.svg" data-a11y-dialog-show="dialog-container">
         <img class="icon button reset" src="./image/icon/clock.svg">
         <img class="icon button remove" src="./image/icon/garbage.svg">
         <img class="icon button path" src="./image/icon/target.svg">
     </div>
+    <div id="dialog-container">
+        <div tabindex="-1" data-a11y-dialog-hide></div>
+        <dialog aria-labelledby="dialog-title">
+            <h1 id="dialog-title">添加人物</h1>
+        </dialog>
+    </div>
     <script src="./lib/d3.js"></script>
     <script src="./lib/save_svg.js"></script>
+    <script src="./lib/a11y-dialog.js"></script>
     <script type="module" src="./script/main.js"></script>
 </body>
 </html>

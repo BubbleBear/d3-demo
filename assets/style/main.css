@@ -57,3 +57,8 @@ text.relation-show {
     opacity: 0.5;
     /* background: radial-gradient(circle at center, red 0, blue, green 100%) */
 }
+
+dialog {
+    border: none;
+    border-radius: 10px;
+}
