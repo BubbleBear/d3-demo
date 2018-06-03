@@ -4,23 +4,19 @@ export default (simulation) => {
     return {
         drag: {
             start(target, index, nodes) {
+                simulation
+                    .alphaTarget(0.3)
+                    .restart();
+
                 d3.select(this)
                     .classed('dragging', true)
             },
             drag(target, index, nodes) {
-                simulation
-                    .alphaTarget(0)
-                    .restart();
-
                 d3.select(this)
-                    .attr('cx', target.x = d3.event.x)
-                    .attr('cy', target.y = d3.event.y)
+                    .attr('cx', target.fx = d3.event.x)
+                    .attr('cy', target.fy = d3.event.y)
             },
             end(target, index, nodes) {
-                simulation
-                    .alphaTarget(0)
-                    .restart();
-
                 d3.select(this)
                     .classed('dragging', false)
             },

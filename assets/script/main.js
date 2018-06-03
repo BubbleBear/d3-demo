@@ -26,8 +26,6 @@ function initSimulation() {
             .distanceMin(1)
             .distanceMax(Infinity)
         )
-        .alpha(0.01)
-        .restart();
 }
 
 function drawNodes(data) {
@@ -133,6 +131,7 @@ async function start() {
         .force('link', d3.forceLink()
             .id(v => v.id)
             .links(data.edges)
+            .distance(radius * 10)
         )
         .on('tick', events.tick);
 
