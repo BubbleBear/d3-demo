@@ -1,7 +1,6 @@
 import eventsWrapper from './events.js';
 import createMenu from './menu.js';
 import initPanel from './panel.js';
-import dialog from './dialog.js';
 
 const width = 1200;
 const height = 900;

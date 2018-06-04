@@ -1,5 +1,3 @@
-import dialog from './dialog.js';
-
 export default (simulation) => {
     return {
         drag: {
