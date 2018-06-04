@@ -68,7 +68,6 @@ export default (simulation) => {
                     .classed('relation-show', false);
             },
             add(target, index, nodes) {},
-            reset(target, index, nodes) {},
             remove(target, index, nodes) {
                 const person = d3.selectAll(`.person.${target.id}`);
                 const allAboutIt = d3.selectAll(`.${target.id}`);

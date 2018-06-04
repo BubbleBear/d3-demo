@@ -14,6 +14,10 @@ export default () => {
 
     let removeFlag = 1;
 
+    reset.on('click', () => {
+        location.reload();
+    });
+
     remove.on('click', (target, index, nodes) => {
         persons.classed('remove', removeFlag);
         remove.attr('src', garbageSet[removeFlag]);
