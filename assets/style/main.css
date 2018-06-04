@@ -5,6 +5,10 @@ body {
     user-select:none;
 }
 
+h1 {
+    text-align: center;
+}
+
 circle.person {
     stroke: rgb(211, 173, 233);
     stroke-width: 1.5;
@@ -61,4 +65,12 @@ text.relation-show {
 dialog {
     border: none;
     border-radius: 10px;
+}
+
+form.add-form>* {
+    margin: 18px 18px;
+}
+
+form.add-form>[type="submit"] {
+    float: right;
 }

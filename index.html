@@ -20,8 +20,24 @@
         <div tabindex="-1" data-a11y-dialog-hide></div>
         <dialog aria-labelledby="dialog-title">
             <h1 id="dialog-title">添加人物</h1>
+            <form class="add-form" action="" method="POST" target="none" enctype="multipart/form-data">
+                <div>
+                    <span>头像</span>
+                    <input type="file" name="avatar">
+                </div>
+                <div>
+                    <span>名称</span>
+                    <input type="text" name="name">
+                </div>
+                <div>
+                    <span>关系</span>
+                    <input type="text" name="relation">
+                </div>
+                <input type="submit" value="添加">
+            </form>
         </dialog>
     </div>
+    <iframe name="none" style="display: none"></iframe>
     <script src="./lib/d3.js"></script>
     <script src="./lib/save_svg.js"></script>
     <script src="./lib/a11y-dialog.js"></script>
