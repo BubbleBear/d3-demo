@@ -1,6 +1,7 @@
 import eventsWrapper from './events.js';
 import createMenu from './menu.js';
 import initPanel from './panel.js';
+import overlay from './overlay.js';
 
 const width = 1200;
 const height = 900;
@@ -170,6 +171,13 @@ async function start() {
         .on('simuresume', events.custom.simuResume)
 
     initPanel();
+
+    const content = overlay();
+    let x = content.append('div')
+    x.append('p').html('asdf')
+    x.append('p').html('asdf')
+    x.append('p').html('asdf')
+    x.append('p').html('asdf')
 }
 
 start();
