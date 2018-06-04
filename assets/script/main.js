@@ -2,6 +2,7 @@ import eventsWrapper from './events.js';
 import createMenu from './menu.js';
 import initPanel from './panel.js';
 import overlay from './overlay.js';
+import upload from './upload.js';
 
 const width = 1200;
 const height = 900;
@@ -172,7 +173,9 @@ async function start() {
 
     initPanel();
 
-    const overlayContent = overlay('modal');
+    overlay('modal');
+
+    upload(simulation);
 }
 
 start();

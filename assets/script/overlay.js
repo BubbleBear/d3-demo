@@ -84,7 +84,6 @@ function style() {
             .overlay-content {
                 border: 1px solid #d1d5da;
                 border-radius: 3px;
-                width: 448px;
                 margin-right: auto;
                 margin-left: auto;
                 background-color: #fff;

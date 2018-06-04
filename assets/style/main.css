@@ -62,15 +62,21 @@ text.relation-show {
     /* background: radial-gradient(circle at center, red 0, blue, green 100%) */
 }
 
-dialog {
-    border: none;
-    border-radius: 10px;
+.overlay-content {
+    width: 300px;
+    padding: 0 50px 15px 50px;
 }
 
-form.add-form>* {
-    margin: 18px 18px;
+form {
+    position: relative;
+    overflow: hidden;
 }
 
-form.add-form>[type="submit"] {
+form > * {
+    margin: 18px;
+    white-space: nowrap;
+}
+
+form > [type="submit"] {
     float: right;
 }

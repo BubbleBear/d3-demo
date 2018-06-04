@@ -67,7 +67,9 @@ export default (simulation) => {
                 d3.selectAll(`.relation.${target.id}`)
                     .classed('relation-show', false);
             },
-            add(target, index, nodes) {},
+            add(target, index, nodes) {
+                console.log('asdf')
+            },
             remove(target, index, nodes) {
                 const person = d3.selectAll(`.person.${target.id}`);
                 const allAboutIt = d3.selectAll(`.${target.id}`);

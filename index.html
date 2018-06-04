@@ -16,10 +16,24 @@
         <img class="icon button remove" src="./image/icon/garbage.svg">
         <img class="icon button path" src="./image/icon/target.svg">
     </div>
-    <div id="modal" hidden>
-        <p>asdf</p>
-        <p>adsf</p>
-        <p>asdf</p>
+    <div id="modal1" class="overlay-content">
+        <h2>添加人物</h2>
+        <form action="" target="none">
+            <div>
+                <span>头像: </span>
+                <input id="avatar_upload" type="file" name="avatar">
+                <img class="preview" src="" alt="" style="position: absolute; right: 1px;">
+            </div>
+            <div>
+                <span>名字: </span>
+                <input class="name" type="text">
+            </div>
+            <div>
+                <span>关系: </span>
+                <input class="relations" type="text">
+            </div>
+            <input type="submit" value="添加">
+        </form>
     </div>
     <iframe name="none" style="display: none"></iframe>
     <script src="./lib/d3.js"></script>
