@@ -117,12 +117,13 @@ class D3Demo {
     
     async download() {
         d3.event.preventDefault();
+        const svg = document.querySelector('svg');
         const pos = d3.mouse(document.body);
     
         createMenu(pos, 'relation-force', {
-            svg: await svgAsDataUri(this.svg),
-            png: await svgAsPngUri(this.svg, {encoderType: 'image/png'}),
-            jpeg: await svgAsPngUri(this.svg, {encoderType: 'image/jpeg'}),
+            svg: await svgAsDataUri(svg),
+            png: await svgAsPngUri(svg, {encoderType: 'image/png'}),
+            jpeg: await svgAsPngUri(svg, {encoderType: 'image/jpeg'}),
         });
     }
     
@@ -159,7 +160,7 @@ class D3Demo {
             .on('click', events.custom.remove)
     
         this.svg.on('contextmenu', () => {
-            download();
+            this.download();
         })
     
         d3.select('body')
