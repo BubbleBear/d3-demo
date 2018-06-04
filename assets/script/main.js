@@ -83,17 +83,13 @@ class D3Demo {
     }
     
     drawEdges(data) {
-        console.log(data)
         const edges = this.svg.append('g')
             .classed('edges', true)
             .selectAll('line.relation')
             .data(data)
             .enter()
             .append('line')
-            .attr('class', v => {
-                console.log(v.source, v.target)
-                return `relation ${(v.source.id)} ${(v.target.id)}`
-            });
+            .attr('class', v => `relation ${(v.source)} ${(v.target)}`);
     
         return edges;
     }
@@ -105,7 +101,7 @@ class D3Demo {
             .data(data)
             .enter()
             .append('text')
-            .attr('class', v => `relation ${(v.source.id)} ${(v.target.id)}`)
+            .attr('class', v => `relation ${(v.source)} ${(v.target)}`)
             .text(v => v.relation);
     
         return texts;
@@ -142,7 +138,7 @@ class D3Demo {
         });
     }
     
-    async start() {
+    start() {
         const data = this.data;
         const events = this.events;
         
