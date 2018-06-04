@@ -1,8 +1,14 @@
 const head = d3.select('head');
 const body = d3.select('body');
 
-export default () => {
-    const overlay = buildOverlay();
+export default (id) => {
+    const { overlay, content } = buildOverlay();
+
+    const tmp = d3.select(`#${id}`).classed('overlay-content', true).property('hidden', false);
+    try {
+        content.html(tmp.html());
+    } catch (e) {}
+    tmp.remove();
 
     style();
 
@@ -16,13 +22,14 @@ export default () => {
             overlay.property('hidden', true);
         })
 
-    return overlay.select('.overlay-content');
+    return content;
 }
 
 function buildOverlay() {
     const overlay = body
         .append('div')
-        .attr('class', 'overlay-layout');
+        .attr('class', 'overlay-layout')
+        .property('hidden', true);
     
     const mask = overlay
         .append('div')
@@ -35,14 +42,11 @@ function buildOverlay() {
             }
         }, true);
 
-    mask
+    const content = mask
         .append('div')
-        .attr('class', 'overlay-content')
+        .attr('class', 'overlay-content');
 
-    overlay
-        .property('hidden', true);
-
-    return overlay;
+    return { overlay, content };
 }
 
 function style() {

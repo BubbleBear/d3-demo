@@ -172,12 +172,7 @@ async function start() {
 
     initPanel();
 
-    const content = overlay();
-    let x = content.append('div')
-    x.append('p').html('asdf')
-    x.append('p').html('asdf')
-    x.append('p').html('asdf')
-    x.append('p').html('asdf')
+    const overlayContent = overlay('modal');
 }
 
 start();
