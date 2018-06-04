@@ -5,7 +5,7 @@ import overlay from './overlay.js';
 import upload from './upload.js';
 
 class D3Demo {
-    constructor() {
+    constructor(data) {
         this.width = 1200;
         this.height = 900;
         this.radius = 35;
@@ -14,10 +14,21 @@ class D3Demo {
         this.svg = d3.select('body')
             .append('svg')
             .attr('width', this.width)
-            .attr('height', this.height);
+            .attr('height', this.height)
+            .on('contextmenu', () => {
+                this.download();
+            });
 
         this.simulation = this.initSimulation();
         this.events = eventsWrapper(this);
+
+        this.data = data;
+        this.edges = this.drawEdges(data.edges);
+        this.edgeTexts = this.drawEdgeTexts(data.edges);
+        this.nodes = this.drawNodes(data.nodes);
+        this.drawAvatars(data.nodes);
+        this.nodes.attr('fill', v => `url(#avatar${v.id})`);
+        this.nodeTexts = this.drawNodeTexts(data.nodes);
 
         initPanel();
     
@@ -72,13 +83,17 @@ class D3Demo {
     }
     
     drawEdges(data) {
+        console.log(data)
         const edges = this.svg.append('g')
             .classed('edges', true)
             .selectAll('line.relation')
             .data(data)
             .enter()
             .append('line')
-            .attr('class', v => `relation ${(v.source.id)} ${(v.target.id)}`);
+            .attr('class', v => {
+                console.log(v.source, v.target)
+                return `relation ${(v.source.id)} ${(v.target.id)}`
+            });
     
         return edges;
     }
@@ -128,7 +143,6 @@ class D3Demo {
     }
     
     async start() {
-        this.data = await d3.json('relation.json');
         const data = this.data;
         const events = this.events;
         
@@ -141,17 +155,7 @@ class D3Demo {
             )
             .on('tick', events.tick);
     
-        let edges = this.drawEdges(data.edges);
-        this.drawEdgeTexts(data.edges);
-    
-        let nodes = this.drawNodes(data.nodes);
-        this.drawNodeTexts(data.nodes);
-    
-        this.drawAvatars(data.nodes);
-    
-        nodes.attr('fill', v => `url(#avatar${v.id})`);
-    
-        nodes.call(d3.drag()
+        this.nodes.call(d3.drag()
             .on('start', events.drag.start)
             .on('drag', events.drag.drag)
             .on('end', events.drag.end))
@@ -159,16 +163,14 @@ class D3Demo {
             .on('mouseleave', events.custom.hideRelation)
             .on('click', events.custom.remove)
     
-        this.svg.on('contextmenu', () => {
-            this.download();
-        })
-    
         d3.select('body')
             .on('simupause', events.custom.simuPause)
             .on('simuresume', events.custom.simuResume)
     
-        upload(this.simulation);
+        upload(this);
     }
 }
 
-(new D3Demo()).start();
+d3.json('relation.json').then(data => {
+    (new D3Demo(data)).start();
+})

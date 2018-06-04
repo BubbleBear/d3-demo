@@ -1,4 +1,4 @@
-export default (simulation) => {
+export default (ctx) => {
     const fileInput = document.querySelector('#avatar_upload');
 
     const preview = d3.select('.preview');
