@@ -28,18 +28,16 @@ function buildOverlay() {
         .append('div')
         .attr('class', 'overlay-background')
         .append('div')
-        .attr('class', 'overlay-mask');
-
-    mask
-        .append('div')
-        .attr('class', 'overlay-content')
-
-    mask
+        .attr('class', 'overlay-mask')
         .on('click', () => {
             if (d3.event.target == mask._groups[0][0]) {
                 overlay.property('hidden', true);
             }
-        }, true)
+        }, true);
+
+    mask
+        .append('div')
+        .attr('class', 'overlay-content')
 
     overlay
         .property('hidden', true);
