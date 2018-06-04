@@ -1,4 +1,5 @@
-export default (simulation) => {
+export default (ctx) => {
+    const { simulation } = ctx;
     return {
         drag: {
             start(target, index, nodes) {
