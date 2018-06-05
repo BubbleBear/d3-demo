@@ -14,17 +14,8 @@ export default (ctx) => {
 
     d3.select('input[type=submit]')
         .on('click', () => {
-            // simulation.stop();
-            // simulation.nodes();
+            ctx.data.nodes = ctx.data.nodes.concat(ctx.data.nodes)
 
-            // const name = document.querySelector('form > * > .name').value;
-
-            // d3.selectAll('g.nodes')
-            //     .append('circle')
-            //     .attr('class', `person ${name}`)
-            //     .attr('fill', `url(${blob})`)
-            //     .attr('r', 35);
-
-            // simulation.restart();
+            ctx.startSimulation(ctx.data, ctx.events)
         })
 };
