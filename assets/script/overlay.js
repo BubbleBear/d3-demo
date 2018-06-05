@@ -13,12 +13,12 @@ export default (id) => {
     style();
 
     d3.select('[show-overlay]')
-        .on('click', () => {
+        .on('mouseup', () => {
             overlay.property('hidden', false);
         });
 
     d3.select('[hide-overlay]')
-        .on('click', () => {
+        .on('mouseup', () => {
             overlay.property('hidden', true);
         })
 

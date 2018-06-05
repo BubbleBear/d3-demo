@@ -3,8 +3,6 @@ export default (ctx) => {
     const preview = d3.select('.preview');
     const name = document.querySelector('input.name');
     const relationContainer = d3.select('form div.relation-container');
-    const relationsSelect = document.querySelector('select.relation');
-    const relationsInput = document.querySelector('input.relation');
 
     let blob;
 
@@ -24,10 +22,17 @@ export default (ctx) => {
     }
 
     function getRelations() {
-        const index = relationsSelect.selectedIndex;
-        const relationsTarget= relationsSelect[index].value;
-        const relationsName = relationsInput.value;
-        return { target: relationsTarget, relation: relationsName }
+        const relations = document.querySelectorAll('.relation-container > div.relation');
+        return Array.prototype.map.call(relations, d => {
+            const select = d.querySelector('select');
+            const target = select[select.selectedIndex];
+            const relation = d.querySelector('input').value;
+            return target && relation && {
+                source: name.value,
+                target: target.value,
+                relation,
+            } || null;
+        }).filter(v => v);
     }
 
     d3.select('img.icon.button.relation')
@@ -73,18 +78,14 @@ export default (ctx) => {
                     }
                 })
 
-                const relation = getRelations();
+                const relations = getRelations();
 
                 ctx.data.nodes = ctx.data.nodes.concat({
                     id: name.value,
                     url: blob,
                 });
 
-                ctx.data.edges = ctx.data.edges.concat({
-                    source: name.value,
-                    target: relation.target,
-                    relation: relation.relation,
-                })
+                ctx.data.edges = ctx.data.edges.concat(relations)
 
                 ctx.drawSvg(ctx.data);
                 ctx.startSimulation(ctx.data)

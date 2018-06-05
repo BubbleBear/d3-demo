@@ -98,7 +98,7 @@ form input.name {
 }
 
 form div.relation-container > div.relation {
-    margin: 5px 0;
+    padding: 3px 0;
     font-size: 0;
 }
 
