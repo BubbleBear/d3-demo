@@ -9,6 +9,10 @@ h2 {
     text-align: center;
 }
 
+input[text] {
+    height: 18px;
+}
+
 circle.person {
     stroke: rgb(211, 173, 233);
     stroke-width: 1.5;
@@ -78,7 +82,7 @@ form > * {
 }
 
 form > * > * {
-    display: inline;
+    display: inline-block;
 }
 
 form > [type="submit"] {
@@ -95,4 +99,11 @@ form select.relations {
 
 form input.relations {
     width: 73px;
+}
+
+form img.icon.button.relations {
+    margin-left: 5px;
+    vertical-align: text-bottom;
+    width: 18px;
+    height: 18px;
 }
