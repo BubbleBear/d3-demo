@@ -21,7 +21,7 @@ export default (ctx) => {
             },
         },
         tick: () => {
-            const nodes = d3.selectAll('circle.person');
+            const nodes = d3.selectAll('circle.person,circle.mask');
             const edges = d3.selectAll('line.relation');
             const nodeTexts = d3.selectAll('text.person');
             const edgeTexts = d3.selectAll('text.relation');

@@ -15,16 +15,27 @@ export default (ctx) => {
         });
 
     function drawNodes(data) {
-        const nodes = svg.append('g')
-            .classed('nodes', true)
+        svg.append('g')
+            .classed('nodes', true);
+
+        const mask = svg.select('g.nodes')
+            .selectAll('circle.mask')
+            .data(data)
+            .enter()
+            .append('circle')
+            .attr('class', v => `mask ${v.id}`)
+            .attr('r', radius + 3)
+            .attr('fill', 'white');
+
+        const nodes = svg.select('g.nodes')
             .selectAll('circle.person')
             .data(data)
             .enter()
             .append('circle')
             .attr('class', v => `person ${v.id}`)
             .attr('r', radius);
-    
-        return nodes;
+
+        return nodes.merge(mask);
     }
     
     function drawNodeTexts(data) {

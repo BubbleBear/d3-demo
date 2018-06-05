@@ -68,7 +68,7 @@ class D3Demo {
                 let a = d3.selectAll(`text.relation.${id}`)
                     .classed('relation-show', true);
 
-                let b = d3.selectAll(`.${id}`)
+                let b = d3.selectAll(`.mask.${id},.relation.${id}`)
                     .classed('highlight', true);
 
                 d3.selection().on('mouseup', () => {

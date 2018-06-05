@@ -33,7 +33,6 @@ text.person {
 }
 
 text.relation {
-    stroke: #0ecfdd;
     visibility: hidden;
     font-family: 'Wawati SC', 'Cute';
 }
@@ -135,5 +134,6 @@ div.target > * {
 }
 
 .highlight {
-    opacity: 0.5;
+    stroke: rgb(7, 226, 197) !important;
+    stroke-width: 2px !important;
 }
