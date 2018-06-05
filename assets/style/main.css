@@ -93,15 +93,15 @@ form input.name {
     width: 150px;
 }
 
-form select.relations {
+form select.relation {
     width: 73px;
 }
 
-form input.relations {
+form input.relation {
     width: 73px;
 }
 
-form img.icon.button.relations {
+form img.icon.button.relation {
     margin-left: 5px;
     vertical-align: text-bottom;
     width: 18px;

@@ -2,22 +2,23 @@ export default (ctx) => {
     const fileInput = document.querySelector('#avatar_upload');
     const preview = d3.select('.preview');
     const name = document.querySelector('input.name');
-    const relationsSelect = document.querySelector('select.relations');
-    const relationsInput = document.querySelector('input.relations');
+    const relationContainer = d3.select('form div.relation-container');
+    const relationsSelect = document.querySelector('select.relation');
+    const relationsInput = document.querySelector('input.relation');
 
     let blob;
 
     function appendOptions() {
-        d3.selectAll('select.relations')
-            .selectAll('option.relations')
+        d3.selectAll('select.relation')
+            .selectAll('option.relation')
             .remove();
             
-        d3.selectAll('select.relations')
-            .selectAll('option.relations')
+        d3.selectAll('select.relation')
+            .selectAll('option.relation')
             .data(ctx.data.nodes)
             .enter()
             .append('option')
-            .classed('relations', true)
+            .classed('relation', true)
             .attr('value', v => v.id)
             .html(v => v.id);
     }
@@ -29,7 +30,14 @@ export default (ctx) => {
         return { target: relationsTarget, relation: relationsName }
     }
 
-    d3.select('select.relations')
+    d3.select('img.icon.button.relation')
+        .on('click', () => {
+            const relation = relationContainer
+                .append('div')
+                .attr('class', 'relation')
+        })
+
+    d3.select('select.relation')
         .on('mousedown', () => {
             appendOptions();
         })
@@ -43,23 +51,32 @@ export default (ctx) => {
 
     d3.select('input[type=submit]')
         .on('click', () => {
-            const relations = getRelations();
+            try {
+                ctx.data.nodes.forEach(v => {
+                    if (v.id === name.value) {
+                        alert('名字重复，请更换');
+                        throw new Error('');
+                    }
+                })
 
-            ctx.data.nodes = ctx.data.nodes.concat({
-                id: name.value,
-                url: blob,
-            });
+                const relation = getRelations();
 
-            ctx.data.edges = ctx.data.edges.concat({
-                source: name.value,
-                target: relations.target,
-                relation: relations.relation,
-            })
+                ctx.data.nodes = ctx.data.nodes.concat({
+                    id: name.value,
+                    url: blob,
+                });
 
-            ctx.drawSvg(ctx.data);
-            ctx.startSimulation(ctx.data)
-            ctx.registerEvents();
-            
-            ctx.simulation.alpha(0.9).restart();
+                ctx.data.edges = ctx.data.edges.concat({
+                    source: name.value,
+                    target: relation.target,
+                    relation: relation.relation,
+                })
+
+                ctx.drawSvg(ctx.data);
+                ctx.startSimulation(ctx.data)
+                ctx.registerEvents();
+                
+                ctx.simulation.alpha(0.9).restart();
+            } catch (e) {}
         })
 };
