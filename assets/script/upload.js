@@ -8,12 +8,12 @@ export default (ctx) => {
 
     let blob;
 
-    function appendOptions() {
-        d3.selectAll('select.relation')
+    function appendOptions(target) {
+        target
             .selectAll('option.relation')
             .remove();
             
-        d3.selectAll('select.relation')
+        target
             .selectAll('option.relation')
             .data(ctx.data.nodes)
             .enter()
@@ -36,7 +36,7 @@ export default (ctx) => {
                 .append('div')
                 .attr('class', 'relation wrap');
 
-            relation
+            const select = relation
                 .append('select')
                 .attr('class', 'relation');
 
@@ -44,11 +44,16 @@ export default (ctx) => {
                 .append('input')
                 .attr('class', 'relation')
                 .attr('type', 'text');
+
+            select
+                .on('mousedown', () => {
+                    appendOptions(select);
+                })
         })
 
     d3.select('select.relation')
         .on('mousedown', () => {
-            appendOptions();
+            appendOptions(d3.select('select.relation'));
         })
 
     d3.select('input[type=file]')
