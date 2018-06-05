@@ -25,7 +25,7 @@ export default (ctx) => {
             const edges = d3.selectAll('line.relation');
             const nodeTexts = d3.selectAll('text.person');
             const edgeTexts = d3.selectAll('text.relation');
-            const { clientWidth, clientHeight } = document.querySelector('svg');
+            const { clientWidth, clientHeight } = document.querySelector('svg#layout');
 
             nodes
                 .attr('cx', (target, index, nodes) => {

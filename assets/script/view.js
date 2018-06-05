@@ -7,7 +7,7 @@ export default (ctx) => {
     const radius = ctx.radius = 35;
     const fontSize = ctx.fontSize = 16;
 
-    const svg = d3.select('svg')
+    const svg = d3.select('svg#layout')
         .attr('width', width)
         .attr('height', height)
         .on('contextmenu', () => {

@@ -68,7 +68,7 @@ export default (ctx) => {
         .on('change', () => {
             const avatar = fileInput.files[0];
             blob = URL.createObjectURL(avatar);
-            preview.property('src', blob)
+            preview.attr('xlink:href', blob)
         })
 
     d3.select('input[type=submit]')
