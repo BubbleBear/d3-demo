@@ -63,7 +63,7 @@ text.relation-show {
 }
 
 .overlay-content {
-    width: 300px;
+    width: 350px;
     padding: 0 50px 15px 50px;
 }
 
@@ -77,6 +77,22 @@ form > * {
     white-space: nowrap;
 }
 
+form > * > * {
+    display: inline;
+}
+
 form > [type="submit"] {
     float: right;
+}
+
+form input.name {
+    width: 150px;
+}
+
+form select.relations {
+    width: 73px;
+}
+
+form input.relations {
+    width: 73px;
 }

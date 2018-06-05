@@ -3,6 +3,12 @@ export default (ctx) => {
 
     const preview = d3.select('.preview');
 
+    const name = document.querySelector('input.name');
+
+    const select = document.querySelector('select.relations');
+    const index = select.selectedIndex;
+    const relationWith = select[index];
+
     let blob;
 
     d3.select('input[type=file]')
@@ -14,8 +20,18 @@ export default (ctx) => {
 
     d3.select('input[type=submit]')
         .on('click', () => {
-            ctx.data.nodes = ctx.data.nodes.concat(ctx.data.nodes)
+            ctx.data.nodes = ctx.data.nodes.concat({
+                id: name.value,
+                url: blob,
+            });
 
-            ctx.startSimulation(ctx.data, ctx.events)
+            ctx.drawSvg(ctx.data);
+            ctx.startSimulation(ctx.data)
+            ctx.registerEvents();
+        })
+
+    d3.select('input.relations[type=text]')
+        .on('change', () => {
+            console.log(relationWith)
         })
 };

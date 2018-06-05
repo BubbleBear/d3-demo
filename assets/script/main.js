@@ -31,7 +31,7 @@ class D3Demo {
             )
     }
 
-    startSimulation(data, events) {
+    startSimulation(data) {
         this.simulation
             .nodes(data.nodes)
             .force('link', d3.forceLink()
@@ -39,25 +39,27 @@ class D3Demo {
                 .links(data.edges)
                 .distance(this.radius * 10)
             )
-            .on('tick', events.tick);
+            .on('tick', this.events.tick);
+    }
+
+    registerEvents() {
+        this.nodes.call(d3.drag()
+            .on('start', this.events.drag.start)
+            .on('drag', this.events.drag.drag)
+            .on('end', this.events.drag.end))
+            .on('mouseenter', this.events.custom.showRelation)
+            .on('mouseleave', this.events.custom.hideRelation)
+            .on('click', this.events.custom.remove);
     }
     
     start() {
-        const events = this.events;
-
-        this.startSimulation(this.data, events);
+        this.startSimulation(this.data);
     
-        this.nodes.call(d3.drag()
-            .on('start', events.drag.start)
-            .on('drag', events.drag.drag)
-            .on('end', events.drag.end))
-            .on('mouseenter', events.custom.showRelation)
-            .on('mouseleave', events.custom.hideRelation)
-            .on('click', events.custom.remove)
+        this.registerEvents();
     
         d3.select('body')
-            .on('simupause', events.custom.simuPause)
-            .on('simuresume', events.custom.simuResume)
+            .on('simupause', this.events.custom.simuPause)
+            .on('simuresume', this.events.custom.simuResume)
     
         upload(this);
     }

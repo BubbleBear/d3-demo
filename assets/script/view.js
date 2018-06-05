@@ -53,7 +53,7 @@ export default (ctx) => {
             .data(data)
             .enter()
             .append('line')
-            .attr('class', v => `relation ${(v.source)} ${(v.target)}`);
+            .attr('class', v => `relation ${v.source.id || v.source} ${v.target.id || v.target}`);
     
         return edges;
     }
@@ -65,7 +65,7 @@ export default (ctx) => {
             .data(data)
             .enter()
             .append('text')
-            .attr('class', v => `relation ${(v.source)} ${(v.target)}`)
+            .attr('class', v => `relation ${v.source.id || v.source} ${v.target.id || v.target}`)
             .text(v => v.relation);
     
         return texts;
@@ -85,7 +85,7 @@ export default (ctx) => {
             .append('image')
             .attr('width', radius * 2)
             .attr('height', radius * 2)
-            .attr('xlink:href', v => `image/${v.image}`);
+            .attr('xlink:href', v => `${v.image ? `image/${v.image}` : v.url}`);
     
         return avatars;
     }
@@ -103,6 +103,7 @@ export default (ctx) => {
     }
 
     return function drawSvg(data) {
+        svg.selectAll('*').remove();
         ctx.edges = drawEdges(data.edges);
         ctx.edgeTexts = drawEdgeTexts(data.edges);
         ctx.nodes = drawNodes(data.nodes);
