@@ -5,6 +5,10 @@ body {
     user-select:none;
 }
 
+.wrap {
+    display: block;
+}
+
 h2 {
     text-align: center;
 }
@@ -91,6 +95,19 @@ form > [type="submit"] {
 
 form input.name {
     width: 150px;
+}
+
+form div.relation-container > div.relation {
+    margin: 5px 0;
+    font-size: 0;
+}
+
+form div.relation-container > div.relation > * {
+    margin: 0 1px;
+}
+
+form div.relation-container > div.relation.wrap {
+    margin-left: 40px;
 }
 
 form select.relation {

@@ -34,7 +34,16 @@ export default (ctx) => {
         .on('click', () => {
             const relation = relationContainer
                 .append('div')
+                .attr('class', 'relation wrap');
+
+            relation
+                .append('select')
+                .attr('class', 'relation');
+
+            relation
+                .append('input')
                 .attr('class', 'relation')
+                .attr('type', 'text');
         })
 
     d3.select('select.relation')
