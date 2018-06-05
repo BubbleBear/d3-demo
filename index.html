@@ -11,12 +11,12 @@
 </head>
 <body>
     <div class="panel">
-        <img class="icon button add" src="./image/icon/plus.svg" show-overlay>
+        <img class="icon button add" src="./image/icon/plus.svg" show-overlay="add">
         <img class="icon button reset" src="./image/icon/clock.svg">
         <img class="icon button remove" src="./image/icon/garbage.svg">
-        <img class="icon button path" src="./image/icon/target.svg">
+        <img class="icon button path" src="./image/icon/target.svg" show-overlay="target">
     </div>
-    <div id="modal" class="overlay-content" hidden>
+    <div id="add" class="overlay-content" hidden>
         <h2>添加人物</h2>
         <form action="" target="none">
             <div>
@@ -38,8 +38,16 @@
                 </div>
                 <img class="icon button relation" src="./image/icon/plus.svg">
             </div>
-            <input type="submit" value="添加" hide-overlay>
+            <input type="submit" value="添加" hide-overlay="add">
         </form>
+    </div>
+    <div id="target" class="overlay-content" hidden>
+        <div class="target">
+            <h2>查询人物关系</h2>
+            <span>名字: </span>
+            <input class="target" type="text">
+            <button class="target button" hide-overlay="target">查询</button>
+        </div>
     </div>
     <iframe name="none" style="display: none"></iframe>
     <svg id="layout"></svg>

@@ -13,7 +13,8 @@ class D3Demo {
         this.simulation = this.initSimulation();
         this.events = eventsWrapper(this);
 
-        overlay('modal');
+        overlay('add');
+        overlay('target');
     }
 
     initSimulation() {
@@ -59,7 +60,23 @@ class D3Demo {
     
         d3.select('body')
             .on('simupause', this.events.custom.simuPause)
-            .on('simuresume', this.events.custom.simuResume)
+            .on('simuresume', this.events.custom.simuResume);
+
+        d3.select('div.target button')
+            .on('click', () => {
+                const id = document.querySelector('div.target input').value;
+                let a = d3.selectAll(`text.relation.${id}`)
+                    .classed('relation-show', true);
+
+                let b = d3.selectAll(`.${id}`)
+                    .classed('highlight', true);
+
+                d3.selection().on('mouseup', () => {
+                    a.classed('relation-show', false);
+                    b.classed('highlight', false);
+                    d3.selection().on('mouseup', null);
+                })
+            })
     
         upload(this);
     }

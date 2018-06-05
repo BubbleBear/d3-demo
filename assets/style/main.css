@@ -33,6 +33,7 @@ text.person {
 }
 
 text.relation {
+    stroke: #0ecfdd;
     visibility: hidden;
     font-family: 'Wawati SC', 'Cute';
 }
@@ -123,4 +124,16 @@ form img.icon.button.relation {
     vertical-align: text-bottom;
     width: 18px;
     height: 18px;
+}
+
+div.target {
+    margin-left: 50px;
+}
+
+div.target > * {
+    margin: 10px;
+}
+
+.highlight {
+    opacity: 0.5;
 }
