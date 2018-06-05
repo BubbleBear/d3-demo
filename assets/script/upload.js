@@ -22,14 +22,17 @@ export default (ctx) => {
     }
 
     function getRelations() {
+        const dupSet = new Set();
         const relations = document.querySelectorAll('.relation-container > div.relation');
         return Array.prototype.map.call(relations, d => {
             const select = d.querySelector('select');
-            const target = select[select.selectedIndex];
+            let target = select[select.selectedIndex];
+            target && (target = target.value);
+            target = !dupSet.has(target) && dupSet.add(target) && target;
             const relation = d.querySelector('input').value;
             return target && relation && {
                 source: name.value,
-                target: target.value,
+                target: target,
                 relation,
             } || null;
         }).filter(v => v);
