@@ -8,13 +8,13 @@ class D3Demo {
         // init the view, which must the the first method to call
         this.drawSvg = view(this);
         this.drawSvg(data);
-
+        
         this.data = data;
         this.simulation = this.initSimulation();
         this.events = eventsWrapper(this);
 
         overlay('add');
-        overlay('target');
+        overlay('query');
     }
 
     initSimulation() {
@@ -52,7 +52,7 @@ class D3Demo {
             .on('mouseleave', this.events.custom.hideRelation)
             .on('click', this.events.custom.remove);
     }
-    
+
     start() {
         this.startSimulation(this.data);
     
@@ -62,20 +62,73 @@ class D3Demo {
             .on('simupause', this.events.custom.simuPause)
             .on('simuresume', this.events.custom.simuResume);
 
-        d3.select('div.target button')
+        d3.select('div.query button')
             .on('click', () => {
-                const id = document.querySelector('div.target input').value;
-                let a = d3.selectAll(`text.relation.${id}`)
-                    .classed('relation-show', true);
+                const srcId = document.querySelector('.query.src').value;
+                const targetId = document.querySelector('.query.tar').value;
 
-                let b = d3.selectAll(`.mask.${id},.relation.${id}`)
-                    .classed('highlight', true);
+                if (srcId === targetId) {
+                    alert('请选择源头和目标不同的参数');
+                    return;
+                }
 
-                d3.selection().on('mouseup', () => {
-                    a.classed('relation-show', false);
-                    b.classed('highlight', false);
-                    d3.selection().on('mouseup', null);
-                })
+                const map = this.data.edges.reduce((acc, cur) => {
+                    const src = cur.source.id || cur.source;
+                    const tar = cur.target.id || cur.target;
+                    acc[src] || (acc[src] = {});
+                    acc[tar] || (acc[tar] = {});
+                    acc[src][tar] = cur.relation;
+                    acc[tar][src] = cur.relation;
+                    return acc;
+                }, {});
+
+                const set = new Set([srcId]);
+                const queue = [{ key: srcId, trace: [] }];
+                let cur;
+
+                while (queue.length) {
+                    cur = queue.shift();
+
+                    if (!map[cur.key]) continue;
+
+                    const tos = Object.getOwnPropertyNames(map[cur.key]);
+                    delete map[cur.key];
+
+                    if (tos.includes(targetId)) {
+                        cur = {
+                            key: targetId,
+                            trace: cur.trace.concat([[cur.key, targetId]]),
+                        };
+                        break;
+                    }
+                    
+                    tos.forEach(v => {
+                        const obj = {
+                            key: v,
+                            trace: cur.trace.concat([[cur.key, v]]),
+                        }
+                        queue.push(obj);
+                    });
+                }
+
+                if (cur.key !== targetId) {
+                    alert(`'${srcId}'和'${targetId}'非连通`);
+                } else {
+                    cur.trace.forEach(v => {
+                        d3.selectAll(`circle.${v[0]},circle.${v[1]}`).classed('highlight', true);
+                        d3.selectAll(`line.relation.${v[0]}.${v[1]}`).classed('highlight', true);
+                        d3.selectAll(`text.relation.${v[0]}.${v[1]}`).attr('style', 'visibility: visible; stroke: rgb(185, 9, 97);');
+                    })
+
+                    d3.selection().on('mouseup.cancelHighlight', () => {
+                        cur.trace.forEach(v => {
+                            d3.selectAll(`circle.${v[0]},circle.${v[1]}`).classed('highlight', false);
+                            d3.selectAll(`line.relation.${v[0]}.${v[1]}`).classed('highlight', false);
+                            d3.selectAll(`text.relation.${v[0]}.${v[1]}`).attr('style', false);
+                        })
+                        d3.selection().on('mouseup.cancelHighlight', null);
+                    })
+                }
             })
     
         upload(this);

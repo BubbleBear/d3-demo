@@ -67,7 +67,6 @@ text.relation-show {
 
 .person.remove:hover {
     opacity: 0.5;
-    /* background: radial-gradient(circle at center, red 0, blue, green 100%) */
 }
 
 .overlay-content {
@@ -89,7 +88,7 @@ form > * > * {
     display: inline-block;
 }
 
-form > [type="submit"] {
+button.button, form > [type="submit"] {
     float: right;
 }
 
@@ -125,11 +124,12 @@ form img.icon.button.relation {
     height: 18px;
 }
 
-div.target {
+div.query {
     margin-left: 50px;
+    overflow: hidden;
 }
 
-div.target > * {
+div.query > * {
     margin: 10px;
 }
 
