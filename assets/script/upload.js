@@ -39,7 +39,7 @@ export default (ctx) => {
     }
 
     d3.select('img.icon.button.relation')
-        .on('click', () => {
+        .on('click.upload.relation', () => {
             const relation = relationContainer
                 .append('div')
                 .attr('class', 'relation wrap');
@@ -54,25 +54,25 @@ export default (ctx) => {
                 .attr('type', 'text');
 
             select
-                .on('mousedown', () => {
+                .on('mousedown.upload.relation', () => {
                     appendOptions(select);
                 })
         })
 
-    d3.select('select.relation')
-        .on('mousedown', () => {
-            appendOptions(d3.select('select.relation'));
+    d3.selectAll('select.relation')
+        .on('mousedown.upload.relation', () => {
+            appendOptions(d3.select(d3.event.target));
         })
 
     d3.select('input[type=file]')
-        .on('change', () => {
+        .on('change.upload.file', () => {
             const avatar = fileInput.files[0];
             blob = URL.createObjectURL(avatar);
             preview.attr('xlink:href', blob)
         })
 
     d3.select('input[type=submit]')
-        .on('click', () => {
+        .on('click.upload.submit', () => {
             try {
                 ctx.data.nodes.forEach(v => {
                     if (v.id === name.value) {
