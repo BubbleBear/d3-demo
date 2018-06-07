@@ -1,3 +1,5 @@
+// 入口文件
+
 import eventsWrapper from './events.js';
 import overlay from './overlay.js';
 import upload from './upload.js';
@@ -66,8 +68,10 @@ class D3Demo {
             .on('simupause', this.events.custom.simuPause)
             .on('simuresume', this.events.custom.simuResume);
 
+        // 关系查询
         d3.select('div.query button')
             .on('click', () => {
+                // 获取源和目标的ID
                 const srcId = document.querySelector('.query.src').value;
                 const targetId = document.querySelector('.query.tar').value;
 
@@ -76,6 +80,27 @@ class D3Demo {
                     return;
                 }
 
+                // 使边集成为一种映射表，其结构为
+                // {
+                //     source1: [
+                //         {
+                //             target1: relation,
+                //         },
+                //         {
+                //             target2: relation,
+                //         },
+                //         ...
+                //     ],
+                //     source2: [
+                //         {
+                //             target1: relation,
+                //         },
+                //         {
+                //             target2: relation,
+                //         },
+                //         ...
+                //     ]
+                // }
                 const map = this.data.edges.reduce((acc, cur) => {
                     const src = cur.source.id || cur.source;
                     const tar = cur.target.id || cur.target;
@@ -86,10 +111,13 @@ class D3Demo {
                     return acc;
                 }, {});
 
+                // 使用set数据结构以确保在关系中每个节点最多被访问一次
                 const set = new Set([srcId]);
+                // 队列，用来做BFS
                 const queue = [{ key: srcId, trace: [] }];
                 let cur;
 
+                // BFS
                 while (queue.length) {
                     cur = queue.shift();
 
@@ -98,6 +126,7 @@ class D3Demo {
                     const tos = Object.getOwnPropertyNames(map[cur.key]);
                     delete map[cur.key];
 
+                    // 找到目标时终止循环
                     if (tos.includes(targetId)) {
                         cur = {
                             key: targetId,
@@ -115,6 +144,7 @@ class D3Demo {
                     });
                 }
 
+                // 高亮，及点击空白区域取消选中事件的注册
                 if (cur.key !== targetId) {
                     alert(`'${srcId}'和'${targetId}'非连通`);
                 } else {

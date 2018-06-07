@@ -1,3 +1,5 @@
+// 添加节点时上传文件的处理，大部分都是表单处理
+
 export default (ctx) => {
     const fileInput = document.querySelector('#avatar_upload');
     const preview = d3.select('.preview');
@@ -6,6 +8,7 @@ export default (ctx) => {
 
     let blob;
 
+    // 下拉框点击时动态加载，以保证新加入的节点也可被选择
     function appendOptions(target) {
         target
             .selectAll('option.relation')

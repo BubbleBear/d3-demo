@@ -1,3 +1,5 @@
+// 大部分视图的控制，包括SVG，右键下载菜单，左下角控制板
+
 import createMenu from './menu.js';
 import initPanel from './panel.js';
 
@@ -14,6 +16,7 @@ export default (ctx) => {
             download();
         });
 
+    // 绘制节点
     function drawNodes(data) {
         svg.append('g')
             .classed('nodes', true);
@@ -38,6 +41,7 @@ export default (ctx) => {
         return nodes.merge(mask);
     }
     
+    // 绘制节点名称
     function drawNodeTexts(data) {
         const texts = svg.append('g')
             .classed('node-texts', true)
@@ -57,6 +61,7 @@ export default (ctx) => {
         return texts;
     }
     
+    // 绘制边
     function drawEdges(data) {
         const edges = svg.append('g')
             .classed('edges', true)
@@ -69,6 +74,7 @@ export default (ctx) => {
         return edges;
     }
     
+    // 绘制边名称
     function drawEdgeTexts(data) {
         const texts = svg.append('g')
             .classed('edge-texts', true)
@@ -82,6 +88,7 @@ export default (ctx) => {
         return texts;
     }
     
+    // 绘制头像，包裹在def标签中，供节点fill属性使用
     function drawAvatars(data) {
         const avatars = svg.append('g')
             .classed('avatars', true)
@@ -101,6 +108,7 @@ export default (ctx) => {
         return avatars;
     }
 
+    // 右键下载
     async function download() {
         d3.event.preventDefault();
         const svg = document.querySelector('svg');

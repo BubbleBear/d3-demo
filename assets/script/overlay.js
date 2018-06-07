@@ -1,3 +1,5 @@
+// 使一个HTML元素成为模态框
+
 const head = d3.select('head');
 const body = d3.select('body');
 

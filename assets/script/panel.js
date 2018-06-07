@@ -1,3 +1,5 @@
+// 右下角控制板
+
 export default () => {
     const garbageSet = [
         './image/icon/garbage.svg',
