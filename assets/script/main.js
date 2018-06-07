@@ -13,10 +13,12 @@ class D3Demo {
         this.simulation = this.initSimulation();
         this.events = eventsWrapper(this);
 
+        // 使#add和#target变为模态框内容
         overlay('add');
         overlay('target');
     }
 
+    // 初始化力图模拟，在D3 V5里是用这种方式
     initSimulation() {
         return d3.forceSimulation()
             .force('centering', d3.forceCenter(this.width / 2, this.height / 2))
@@ -32,6 +34,7 @@ class D3Demo {
             )
     }
 
+    // 将点和边传入力图模拟，D3 V5里边是添加在力上面的
     startSimulation(data) {
         this.simulation
             .nodes(data.nodes)
@@ -43,6 +46,7 @@ class D3Demo {
             .on('tick', this.events.tick);
     }
 
+    // 注册节点的各种事件，比如拖曳，鼠标悬停，点击等等
     registerEvents() {
         this.nodes.call(d3.drag()
             .on('start', this.events.drag.start)

@@ -1,3 +1,5 @@
+// 这里是大部分力图需要用到的事件
+
 export default (ctx) => {
     const { simulation } = ctx;
     return {
@@ -20,6 +22,7 @@ export default (ctx) => {
                     .classed('dragging', false)
             },
         },
+        // 用于刷新节点/边以及其所附属的文字等等
         tick: () => {
             const nodes = d3.selectAll('circle.person,circle.mask');
             const edges = d3.selectAll('line.relation');
@@ -29,6 +32,7 @@ export default (ctx) => {
 
             nodes
                 .attr('cx', (target, index, nodes) => {
+                    // 限制可活动范围，不可超过可视界面
                     target.x < 0 && (target.x = 0)
                         || target.x > clientWidth && (target.x = clientWidth);
                     return target.x;
@@ -60,6 +64,7 @@ export default (ctx) => {
             simuResume() {
                 simulation.restart();
             },
+            // 用CSS控制隐藏元素
             showRelation(target, index, nodes) {
                 d3.selectAll(`.relation.${target.id}`)
                     .classed('relation-show', true);
@@ -68,9 +73,7 @@ export default (ctx) => {
                 d3.selectAll(`.relation.${target.id}`)
                     .classed('relation-show', false);
             },
-            add(target, index, nodes) {
-                console.log('asdf')
-            },
+            // 删除人物
             remove(target, index, nodes) {
                 const person = d3.selectAll(`.person.${target.id}`);
                 const allAboutIt = d3.selectAll(`.${target.id}`);
@@ -78,7 +81,6 @@ export default (ctx) => {
                     allAboutIt.remove();
                 }
             },
-            link(target, index, nodes) {},
         }
     };
 };
